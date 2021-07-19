@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rz.DddDemo.Base.Application\Rz.DddDemo.Base.Application.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Orders.Domain\Rz.DddDemo.Orders.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DomainTasks\" />
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+</Project>
