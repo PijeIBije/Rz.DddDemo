@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="IntegrationEvents\Inbound\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Rz.DddDemo.Base.Presentation.WebApi.Validation.Errors;
 
 namespace Rz.DddDemo.Base.Presentation.WebApi.Validation

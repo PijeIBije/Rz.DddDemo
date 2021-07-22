@@ -9,9 +9,4 @@
     <ProjectReference Include="..\Rz.DddDemo.Orders.Domain\Rz.DddDemo.Orders.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DomainTasks\" />
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
 </Project>

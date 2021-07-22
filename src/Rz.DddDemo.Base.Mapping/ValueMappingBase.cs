@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Rz.DddDemo.Base.Mapping.Interface;
 
 namespace Rz.DddDemo.Base.Mapping

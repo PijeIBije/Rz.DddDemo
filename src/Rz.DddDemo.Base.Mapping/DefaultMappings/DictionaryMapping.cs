@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Rz.DddDemo.Base.Mapping.Interface;
 
 namespace Rz.DddDemo.Base.Mapping.DefaultMappings

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 using Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService.Interfaces;

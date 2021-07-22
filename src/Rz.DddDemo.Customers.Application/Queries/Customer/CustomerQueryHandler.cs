@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
 using Rz.DddDemo.Customers.Application.Queries.Interfaces;

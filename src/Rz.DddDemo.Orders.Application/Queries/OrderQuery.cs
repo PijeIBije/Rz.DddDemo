@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Rz.DddDemo.Base.Application.QueryHandling;
+﻿using Rz.DddDemo.Base.Application.QueryHandling;
 using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
 using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
 

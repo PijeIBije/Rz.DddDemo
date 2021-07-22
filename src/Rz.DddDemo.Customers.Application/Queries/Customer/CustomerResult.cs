@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
 
 namespace Rz.DddDemo.Customers.Application.Queries.Customer
 {

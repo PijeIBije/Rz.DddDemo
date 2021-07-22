@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Rz.DddDemo.Orders.Domain.ProductAggregate.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.Queries
 {

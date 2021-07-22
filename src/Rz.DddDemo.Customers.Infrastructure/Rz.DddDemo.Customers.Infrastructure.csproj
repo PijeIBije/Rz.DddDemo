@@ -12,14 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure.RabbitMq\Rz.DddDemo.Base.Infrastructure.RabbitMq.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Mapping\Rz.DddDemo.Base.Mapping.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Customers.Application\Rz.DddDemo.Customers.Application.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure.MongoDb\Rz.DddDemo.Base.Infrastructure.MongoDb.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure\Rz.DddDemo.Base.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IntegrationEventsPublishers\RabbitMq\" />
   </ItemGroup>
 
 </Project>

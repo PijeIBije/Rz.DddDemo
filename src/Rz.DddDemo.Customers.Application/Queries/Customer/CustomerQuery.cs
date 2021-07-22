@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
+﻿using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Application.Queries.Customer
 {

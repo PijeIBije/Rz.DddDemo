@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
+﻿using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Presentation.WebApi.Controllers.Order
 {

@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-using Rz.DddDemo.Base.Application.TransactionHandling.Interfaces;
 using Rz.DddDemo.Base.Mapping.Interface;
 using Rz.DddDemo.Customers.Application.Commands.Interfaces;
 using Rz.DddDemo.Customers.Application.Queries.Customer;
 using Rz.DddDemo.Customers.Domain;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.AddressAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
 using Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb.Dto;
 using Rz.DddDemo.Customers.Infrastructure.Schemas.Database.MongoDb;
 using Rz.DddDemo.Base.Infrastructure;
 using Rz.DddDemo.Base.Infrastructure.Exceptions;
 using Rz.DddDemo.Base.Infrastructure.MongoDb;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 {
@@ -53,7 +45,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 
            var task = Task.Run(async () =>
            {
-               var customerDtos = EntityCache.GetToSave<Customer>().Select(x=>mapper.Map<Customer,CustomerDto>(x)).ToList();
+               var customerDtos = EntityCache.GetToSave<CustomerAggregate>().Select(x=>mapper.Map<CustomerAggregate,CustomerDto>(x)).ToList();
 
                var writeModels = new List<WriteModel<CustomerDto>>();
 
@@ -73,7 +65,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 
             transactionTasks.Add(new Task(async () =>
             {
-                var customerDtos = EntityCache.GetToSave<Customer>().Select(x=>mapper.Map<Customer,CustomerDto>(x)).ToList();
+                var customerDtos = EntityCache.GetToSave<CustomerAggregate>().Select(x=>mapper.Map<CustomerAggregate,CustomerDto>(x)).ToList();
 
                 var writeModels = new List<WriteModel<CustomerDto>>();
 
@@ -94,7 +86,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 
         private async Task Commit()
         {
-            var customerDtos = EntityCache.GetToSave<Customer>().Select(x=>mapper.Map<Customer,CustomerDto>(x)).ToList();
+            var customerDtos = EntityCache.GetToSave<CustomerAggregate>().Select(x=>mapper.Map<CustomerAggregate,CustomerDto>(x)).ToList();
 
             var writeModels = new List<WriteModel<CustomerDto>>();
 
@@ -112,17 +104,17 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 
         private IMongoDatabase MongoDb => MongoClient.GetDatabase(Schema.DbName);
 
-        public async Task<Customer> GetById(CustomerId customerId)
+        public async Task<CustomerAggregate> GetById(CustomerId customerId)
         {
             var dto = await MongoDb.GetCollection<CustomerDto>(Schema.CustomersCollection)
                 .Find(x => x.Id == customerId.Value).SingleOrDefaultAsync();
 
-            if (dto == null) throw new NoResultsException(typeof(Customer), customerId);
+            if (dto == null) throw new NoResultsException(typeof(CustomerAggregate), customerId);
 
-            return mapper.Map<CustomerDto,Customer>(dto);
+            return mapper.Map<CustomerDto,CustomerAggregate>(dto);
         }
 
-        public Task Save(Customer customerEntity)
+        public Task Save(CustomerAggregate customerEntity)
         {
             EntityCache.AddToSave(customerEntity.Id, customerEntity);
             return Task.CompletedTask;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
@@ -10,13 +7,13 @@ using Rz.DddDemo.Orders.Domain.Customer;
 
 namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
 {
-    public class CustomerCreatedIntegrationEventHandler:IntegrationEventHandlerBase<CustomerCreated>
+    public class CustomerCreatedIntegrationEventHandler:IntegrationEventHandlerBase<CustomerCreatedIntegrationEvent>
     {
         private readonly ICustomerRepository customerRepository;
 
-        protected override bool HandleBody(CustomerCreated customerUpdated)
+        protected override bool HandleBody(CustomerCreatedIntegrationEvent customerUpdated)
         {
-            var customer = new Customer(
+            var customer = new CustomerAggregate(
                 customerUpdated.CustomerId,
                 customerUpdated.FirstName,
                 customerUpdated.LastName,

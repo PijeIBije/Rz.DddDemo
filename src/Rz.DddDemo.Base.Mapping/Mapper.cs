@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using Rz.DddDemo.Base.Mapping.Interface;
 
 namespace Rz.DddDemo.Base.Mapping
@@ -17,7 +14,7 @@ namespace Rz.DddDemo.Base.Mapping
             this.valueMappings = valueMappings;
         }
 
-        public TResult Map<TSource, TResult>(TSource source)
+        public TResult Map<TSource, TResult>(TSource source, bool requireAllProperties = true)
         {
             if (!TryMap(source, out TResult  result))
             {
@@ -27,7 +24,7 @@ namespace Rz.DddDemo.Base.Mapping
             return result;
         }
 
-        public bool TryMap<TSource, TResult>(TSource source, out TResult result)
+        public bool TryMap<TSource, TResult>(TSource source, out TResult result, bool requireAllProperties = true)
         {
             if (!TryMap(source,typeof(TResult), out var resultAsObject))
             {
@@ -39,7 +36,7 @@ namespace Rz.DddDemo.Base.Mapping
             return true;
         }
 
-        public bool Map(object source, Type resultType, out object result)
+        public bool Map(object source, Type resultType, out object result, bool requireAllProperties = true)
         {
             if (!TryMap(source, resultType, out var resultAsObject))
             {
@@ -51,7 +48,7 @@ namespace Rz.DddDemo.Base.Mapping
             return true;
         }
 
-        public bool TryMap(object source, Type resultType, out object result)
+        public bool TryMap(object source, Type resultType, out object result, bool requireAllProperties = true)
         {
             if (source == null)
             {
@@ -61,7 +58,7 @@ namespace Rz.DddDemo.Base.Mapping
 
             object valueMapped = default;
 
-            if (valueMappings.Any(x => x.TryMap(source, resultType, this, out valueMapped)))
+            if (valueMappings.Any(x => x.TryMap(source, resultType, this, out valueMapped, requireAllProperties)))
             {
                 result = valueMapped; 
                 return true;

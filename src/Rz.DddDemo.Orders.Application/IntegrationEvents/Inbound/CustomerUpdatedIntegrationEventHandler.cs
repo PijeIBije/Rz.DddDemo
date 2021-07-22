@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Rz.DddDemo.Base.Application.DomainEventHandling;
+﻿using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
 using Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound.Interfaces;
@@ -9,7 +6,7 @@ using Rz.DddDemo.Orders.Application.IntegrationEvents.Outbound;
 
 namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
 {
-    public class CustomerUpdatedIntegrationEventHandler:IntegrationEventHandlerBase<CustomerUpdated>
+    public class CustomerUpdatedIntegrationEventHandler:IntegrationEventHandlerBase<CustomerUpdatedIntegrationEvent>
     {
         private readonly ICustomerRepository customerRepository;
 
@@ -22,7 +19,7 @@ namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
             this.customerRepository = customerRepository;
         }
 
-        protected override bool HandleBody(CustomerUpdated customerUpdated)
+        protected override bool HandleBody(CustomerUpdatedIntegrationEvent customerUpdated)
         {
             var customerToUpdate = customerRepository.TryGetById(customerUpdated.CustomerId);
 
@@ -44,7 +41,7 @@ namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
             }
             else
             {
-                RegisterIntegrationEvent(new CustomerDataRequested(customerUpdated.CustomerId));
+                RegisterIntegrationEvent(new CustomerDataRequestedIntegrationEvent(customerUpdated.CustomerId));
             }
 
             return true;

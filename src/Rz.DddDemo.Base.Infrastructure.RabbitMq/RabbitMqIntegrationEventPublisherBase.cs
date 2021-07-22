@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using RabbitMQ.Client;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 
@@ -9,22 +7,15 @@ namespace Rz.DddDemo.Base.Infrastructure.RabbitMq
     public abstract class RabbitMqIntegrationEventPublisherBase<TIntegraionEvent,TIntegrationEventDto>:IIntegrationEventPublisher<TIntegraionEvent> where TIntegraionEvent:IIntegrationEvent
     {
         private readonly ConnectionFactory connectionFactory;
-        private readonly string exchangeName;
-        private readonly string routingKey;
-        private readonly Dictionary<string, object> arguments;
-        private readonly bool mandatory;
+        private readonly RabbitMqIntegrationEventPublisherConfig config;
 
-        protected RabbitMqIntegrationEventPublisherBase(ConnectionFactory connectionFactory, 
-            string exchangeName, 
-            string routingKey, 
-            Dictionary<string,object> arguments,
-            bool mandatory = false)
+
+        protected RabbitMqIntegrationEventPublisherBase(
+            ConnectionFactory connectionFactory, 
+            RabbitMqIntegrationEventPublisherConfig config)
         {
             this.connectionFactory = connectionFactory;
-            this.exchangeName = exchangeName;
-            this.routingKey = routingKey;
-            this.arguments = arguments;
-            this.mandatory = mandatory;
+            this.config = config;
         }
 
 
@@ -37,7 +28,7 @@ namespace Rz.DddDemo.Base.Infrastructure.RabbitMq
 
             var bytes = JsonSerializer.SerializeToUtf8Bytes(integrationEventDto);
 
-            model.BasicPublish(exchangeName, routingKey, mandatory, null, bytes);
+            model.BasicPublish(config.ExchangeName, config.RoutingKey, config.Mandatory, null, bytes);
         }
 
         public abstract TIntegrationEventDto ToIntegrationEventDto(TIntegraionEvent integrationEvent);

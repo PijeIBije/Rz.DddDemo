@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.Queries

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Rz.DddDemo.Customers.Application.Queries.Customer
+﻿namespace Rz.DddDemo.Customers.Application.Queries.Customer
 {
     public class CustomerIncludes
     {

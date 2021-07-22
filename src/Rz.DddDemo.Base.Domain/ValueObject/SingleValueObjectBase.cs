@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using Rz.DddDemo.Base.Domain.ValueObject.Interfaces;
 
 namespace Rz.DddDemo.Base.Domain.ValueObject

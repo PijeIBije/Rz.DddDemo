@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Mapping.Interface;
 using Rz.DddDemo.Customers.Application.Commands.Interfaces;
 using Rz.DddDemo.Customers.Application.Queries.Customer;
 using Rz.DddDemo.Customers.Domain;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.AddressAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
 using Rz.DddDemo.Base.Infrastructure;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.Mock
 {
@@ -28,12 +24,12 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.Mock
             this.mapper = mapper;
         }
 
-        public Task<Customer> GetById(CustomerId customerId)
+        public Task<CustomerAggregate> GetById(CustomerId customerId)
         {
-            return Task.FromResult(entityCache.GetExisting<Customer,CustomerId>(customerId));
+            return Task.FromResult(entityCache.GetExisting<CustomerAggregate,CustomerId>(customerId));
         }
 
-        public Task Save(Customer customerEntity)
+        public Task Save(CustomerAggregate customerEntity)
         {
             entityCache.AddToSave(customerEntity.Id,customerEntity);
             return Task.CompletedTask;
@@ -43,17 +39,17 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.Mock
         {
             if (customerId != null)
             {
-                var entity = entityCache.GetExisting<Customer, CustomerId>(customerId);
+                var entity = entityCache.GetExisting<CustomerAggregate, CustomerId>(customerId);
 
-                IEnumerable<CustomerResult> result = new CustomerResult[] {mapper.Map<Customer,CustomerResult>(entity)};
+                IEnumerable<CustomerResult> result = new CustomerResult[] {mapper.Map<CustomerAggregate,CustomerResult>(entity)};
 
                 return Task.FromResult(result);
             }
             else
             {
-                var entities = entityCache.GetExisting<Customer>();
+                var entities = entityCache.GetExisting<CustomerAggregate>();
 
-                return Task.FromResult(entities.Select(x=>mapper.Map<Customer,CustomerResult>(x)));
+                return Task.FromResult(entities.Select(x=>mapper.Map<CustomerAggregate,CustomerResult>(x)));
             }
         }
     }

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Rz.DddDemo.Customers.Application.Queries.Customer;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
 using Rz.DddDemo.Base.Presentation.WebApi.Validation;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers.Model
 {

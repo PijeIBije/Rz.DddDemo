@@ -18,7 +18,7 @@ namespace Rz.DddDemo.Orders.Domain.Order.ValueObjects
 
         public LastName LastName { get;}
 
-        public ShippingAddress(FirstName firstName, LastName lastName, Address address)
+        public ShippingAddress(FirstName firstName, LastName lastName, AddressValueObject address)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +10,11 @@ using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
 using Rz.DddDemo.Base.Mapping.Interface;
 using Rz.DddDemo.Customers.Application.Commands.Customer;
 using Rz.DddDemo.Customers.Application.Queries.Customer;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.AddressAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.AddressAggregate.ValueObjects;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
 using Rz.DddDemo.Customers.Presentation.WebApi.Controllers.Model;
-using Rz.DddDemo.Base.Presentation.WebApi;
 using Rz.DddDemo.Base.Presentation.WebApi.IncludesMapping;
 using Rz.DddDemo.Base.Presentation.WebApi.Validation.Mapping.Interfaces;
+using Rz.DddDemo.Customers.Domain.Address.ValueObjects;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
 {
@@ -89,7 +86,7 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
                 DateOfBirth = customerResource.DateOfBirth,
                 LastName = customerResource.LastName,
                 FirstName = customerResource.FirstName,
-                Addresses = customerResource.Addresses.Select(x=>mapper.Map<AddressResource,AddressData>(x)).ToList()
+                Addresses = customerResource.Addresses.Select(x=>mapper.Map<AddressResource,AddressUpdate>(x)).ToList()
             };
 
             var customerId = await createCustomerCommandHandler.Handle(command);
@@ -115,8 +112,8 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
                 DateOfBirth = customerPatch.DateOfBirth,
                 LastName = customerPatch.LastName,
                 FirstName = customerPatch.FirstName,
-                AddressesToAddOrUpdate = customerPatch.AddressesToAddOrUpdate.Select(x => mapper.Map<AddressResource, AddressData>(x)).ToList(),
-                AddresesToRemove = customerPatch.AddressesToRemove.Select(x=>new AddressName(x)).ToList()
+                AddressesToAddOrUpdate = customerPatch.AddressesToAddOrUpdate.Select(x => mapper.Map<AddressResource, AddressUpdate>(x)).ToList(),
+                AddresesToRemoveNames = customerPatch.AddressesToRemove.Select(x=>new AddressName(x)).ToList()
             };
 
             await updateCustomerCommandHandler.Handle(command);

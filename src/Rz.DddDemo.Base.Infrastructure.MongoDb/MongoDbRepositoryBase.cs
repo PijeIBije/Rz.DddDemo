@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using Rz.DddDemo.Base.Application.TransactionHandling.Interfaces;
 
 namespace Rz.DddDemo.Base.Infrastructure.MongoDb
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb.Dto

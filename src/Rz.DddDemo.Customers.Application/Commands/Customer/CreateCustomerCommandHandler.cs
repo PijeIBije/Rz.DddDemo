@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Rz.DddDemo.Base.Application;
 using Rz.DddDemo.Base.Application.CommandHandling;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
-using Rz.DddDemo.Base.Application.DomainEventHandling.Interfaces;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
-using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 using Rz.DddDemo.Base.Application.TransactionHandling;
 using Rz.DddDemo.Customers.Application.Commands.Interfaces;
-using Rz.DddDemo.Customers.Application.IntegrationEvents;
 using Rz.DddDemo.Customers.Application.IntegrationEvents.Outbound;
 using Rz.DddDemo.Customers.Domain;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.AddressAggregate;
-using Rz.DddDemo.Customers.Domain.CustomerAggregate.ValueObjects;
+using Rz.DddDemo.Customers.Domain.Address;
+using Rz.DddDemo.Customers.Domain.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Application.Commands.Customer
 {
@@ -37,7 +30,7 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
 
         protected override async Task<CustomerId> HandleBody(CreateCustomerCommand command)
         {
-            var addreses = command.Addresses.Select(x => new Address(
+            var addreses = command.Addresses.Select(x => new AddressEntity(
                 x.Name,
                 x.AddressLine1,
                 x.AddressLine2,
@@ -46,12 +39,12 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
                 x.EmailAddress,
                 x.Country));
 
-            var customer = new Domain.CustomerAggregate.Customer(command.FirstName, command.LastName, command.DateOfBirth,
+            var customer = new CustomerAggregate(command.FirstName, command.LastName, command.DateOfBirth,
                 addreses.ToList());
 
             await customerRepository.Save(customer);
 
-            var customerCreated = new CustomerCreated(customer);
+            var customerCreated = new CustomerCreatedIntegrationEvent(customer);
 
             RegisterIntegrationEvent(customerCreated);
 

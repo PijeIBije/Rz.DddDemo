@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 
 namespace Rz.DddDemo.Base.Application.IntegrationEventHandling

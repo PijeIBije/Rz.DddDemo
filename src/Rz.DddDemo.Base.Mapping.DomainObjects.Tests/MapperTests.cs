@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rz.DddDemo.Base.Mapping.DefaultMappings;
 using Rz.DddDemo.Base.Mapping.DomainObjects.Tests.Model;
 using Rz.DddDemo.Base.Mapping.Interface;

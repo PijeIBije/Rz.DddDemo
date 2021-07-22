@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DomainTaskHandling\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Rz.DddDemo.Base.Domain\Rz.DddDemo.Base.Domain.csproj" />
   </ItemGroup>
 
