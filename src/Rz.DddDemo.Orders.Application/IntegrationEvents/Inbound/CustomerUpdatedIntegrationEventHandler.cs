@@ -1,8 +1,11 @@
-﻿using Rz.DddDemo.Base.Application.DomainEventHandling;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
-using Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound.Interfaces;
 using Rz.DddDemo.Orders.Application.IntegrationEvents.Outbound;
+using Rz.DddDemo.Orders.Application.Interfaces;
+using Rz.DddDemo.Orders.Domain.Customer;
 
 namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
 {
@@ -19,29 +22,28 @@ namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
             this.customerRepository = customerRepository;
         }
 
-        protected override bool HandleBody(CustomerUpdatedIntegrationEvent customerUpdated)
+        protected override async Task<bool> HandleBody(CustomerUpdatedIntegrationEvent customerUpdatedIntegrationEvent)
         {
-            var customerToUpdate = customerRepository.TryGetById(customerUpdated.CustomerId);
+            var customerToUpdate = await customerRepository.TryGetById(customerUpdatedIntegrationEvent.CustomerId);
 
             if (customerToUpdate != null)
             {
-                customerToUpdate.Update(customerUpdated.FirstName,customerUpdated.LastName);
+                customerToUpdate.Update(
+                    customerUpdatedIntegrationEvent.FirstName,
+                    customerUpdatedIntegrationEvent.LastName,
+                    customerUpdatedIntegrationEvent.Addresses);
 
-                foreach (var address in customerUpdated.Addresses)
-                {
-                    customerToUpdate.AddOrUpdateAddress(address);
-                }
-
-                foreach (var addressName in customerUpdated.AddressesRemoved)
-                {
-                    customerToUpdate.RemoveAddress(addressName);
-                }
-
-                customerRepository.Save(customerToUpdate);
+                await customerRepository.Save(customerToUpdate);
             }
             else
             {
-                RegisterIntegrationEvent(new CustomerDataRequestedIntegrationEvent(customerUpdated.CustomerId));
+                var customer = new CustomerAggregate(
+                    customerUpdatedIntegrationEvent.CustomerId,
+                    customerUpdatedIntegrationEvent.FirstName,
+                    customerUpdatedIntegrationEvent.LastName,
+                    customerUpdatedIntegrationEvent.Addresses.ToList());
+
+                await customerRepository.Save(customer);
             }
 
             return true;

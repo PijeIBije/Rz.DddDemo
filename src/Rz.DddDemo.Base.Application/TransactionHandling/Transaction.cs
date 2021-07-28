@@ -17,18 +17,28 @@ namespace Rz.DddDemo.Base.Application.TransactionHandling
             Started = true;
         }
 
-        private readonly List<Task> transactionTasks = new List<Task>();
+        private readonly List<Func<Task>> transactionTasks = new List<Func<Task>>();
 
         public async Task Commit()
         {
             if(!Started) throw new InvalidOperationException($"{nameof(Transaction)} is not started");
 
             CommitEvent?.Invoke(transactionTasks);
-            await Task.WhenAll(transactionTasks);
+
+            foreach (var transactionTask in transactionTasks)
+            {
+                await transactionTask();
+            }
+
             transactionTasks.Clear();
             Started = false;
             CommitedEvent?.Invoke(transactionTasks);
-            await Task.WhenAll(transactionTasks);
+
+            foreach (var transactionTask in transactionTasks)
+            {
+                await transactionTask();
+            }
+
             transactionTasks.Clear();
         }
     }

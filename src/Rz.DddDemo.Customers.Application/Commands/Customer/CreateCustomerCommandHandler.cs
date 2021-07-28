@@ -44,7 +44,7 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
 
             await customerRepository.Save(customer);
 
-            var customerCreated = new CustomerCreatedIntegrationEvent(customer);
+            var customerCreated = new CustomerUpdatedIntegrationEvent(customer);
 
             RegisterIntegrationEvent(customerCreated);
 

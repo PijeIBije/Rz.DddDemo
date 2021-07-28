@@ -7,5 +7,9 @@ namespace Rz.DddDemo.Orders.Application.Interfaces
     public interface ICustomerRepository
     {
         public Task<CustomerAggregate> GetById(CustomerId customerId);
+
+        public Task Save(CustomerAggregate customer);
+
+        public Task<CustomerAggregate> TryGetById(CustomerId customerId);
     }
 }

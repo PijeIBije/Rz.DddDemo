@@ -7,10 +7,13 @@ using Rz.DddDemo.Customers.Domain.DomainEvents;
 
 namespace Rz.DddDemo.Customers.Application.IntegrationEvents.Outbound
 {
-    public class CustomerUpdatedIntegrationEvent:IntegrationEventFromDomainEventBase<CustomerUpdatedDomainEvent>
+    public class CustomerUpdatedIntegrationEvent : IIntegrationEvent
     {
-        public CustomerUpdatedIntegrationEvent(CustomerUpdatedDomainEvent domainEvent) : base(domainEvent)
+        public CustomerUpdatedIntegrationEvent(CustomerAggregate customer)
         {
+            Customer = customer;
         }
+
+        public CustomerAggregate Customer { get; }
     }
 }

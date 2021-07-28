@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Rz.DddDemo.Base.Domain;
 using Rz.DddDemo.Base.Domain.DomainEntity;
+using Rz.DddDemo.Orders.Domain.Order.DomainEvents;
 using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Product;
 using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Domain.Order
 {
     public class OrderAggregate:DomainEntityBase<OrderId>
     {
+        public event DomainEventHanlder<OrderUpdatedDomainEvent> OrderUpdated;
         public bool IsShipped { get; private set; }
 
         public bool IsPaid { get; private set; }
@@ -38,7 +41,7 @@ namespace Rz.DddDemo.Orders.Domain.Order
 
         }
 
-        public void AddOrderLine(ProductAggregate.ProductAggregate product, Quantity quantity)
+        public void AddOrderLine(ProductAggregate product, Quantity quantity)
         {
             var existingOrderLine = orderLines.SingleOrDefault(x => x.ProductId == product.Id);
 
@@ -62,13 +65,17 @@ namespace Rz.DddDemo.Orders.Domain.Order
             orderLines.Remove(orderLine);
         }
 
-        public void UpdateShippingAddress(ShippingAddress shippingAddress)
+        public void UpdateShippingAddress(ShippingAddress newShippingAddress)
         {
-            Guard.AgainstNullValue(shippingAddress,nameof(shippingAddress));
+            Guard.AgainstNullValue(newShippingAddress,nameof(newShippingAddress));
 
             if(IsShipped) throw new InvalidOperationException("Cannot update Shipping Address of already shipped order");
 
-            ShippingAddress = shippingAddress;
+            var orderUpdated = newShippingAddress != ShippingAddress;
+
+            ShippingAddress = newShippingAddress;
+
+            if(orderUpdated) OrderUpdated?.Invoke(new OrderUpdatedDomainEvent(this));
         }
 
         public void Cancel()
@@ -82,5 +89,7 @@ namespace Rz.DddDemo.Orders.Domain.Order
 
             IsPaid = true;
         }
+
+        public decimal TotalPrice => OrderLines.Sum(x => x.TotalPrice);
     }
 }

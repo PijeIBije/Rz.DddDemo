@@ -35,14 +35,14 @@ namespace Rz.DddDemo.Base.Application.IntegrationEventHandling
         public async Task<bool> Handle(TIntegrationEvent integrationEvent)
         {
             transaction.Start();
-            var result = HandleBody(integrationEvent);
+            var result = await HandleBody(integrationEvent);
             await domainEventsHandler.HandleAll();
             await transaction.Commit();
             integrationEventsPublisher.PublishAll();
             return result;
         }
 
-        protected abstract bool HandleBody(TIntegrationEvent customerUpdated);
+        protected abstract Task<bool> HandleBody(TIntegrationEvent customerUpdatedIntegrationEvent);
         public Task<bool> Handle(IIntegrationEvent integrationEvent)
         {
             return Handle((TIntegrationEvent) integrationEvent);

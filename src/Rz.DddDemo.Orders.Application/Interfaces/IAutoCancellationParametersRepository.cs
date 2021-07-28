@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Rz.DddDemo.Orders.Domain.Parameters;
+using Rz.DddDemo.Orders.Domain.AutoCancellationParameters;
 
 namespace Rz.DddDemo.Orders.Application.Interfaces
 {

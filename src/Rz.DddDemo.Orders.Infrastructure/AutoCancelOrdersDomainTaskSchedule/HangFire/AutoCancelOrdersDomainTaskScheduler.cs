@@ -5,7 +5,7 @@ using Hangfire;
 using Rz.DddDemo.Base.Mapping.Interface;
 using Rz.DddDemo.Orders.Application.DomainTasks.Order;
 using Rz.DddDemo.Orders.Application.Interfaces;
-using Rz.DddDemo.Orders.Domain.Parameters.ValueObjects;
+using Rz.DddDemo.Orders.Domain.AutoCancellationParameters.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Infrastructure.AutoCancelOrdersDomainTaskSchedule.HangFire
 {

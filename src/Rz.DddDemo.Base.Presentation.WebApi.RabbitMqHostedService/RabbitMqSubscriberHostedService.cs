@@ -14,7 +14,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
         public class RabbitMqSubscriberHostedService : IHostedService
         {
             private readonly string queueName;
-            private readonly IEnumerable<IMessageHandler> messageListeners;
+            private readonly IEnumerable<IMessageHandler> messageHandlers;
 
             private readonly IConnection connection;
             private readonly IModel model;
@@ -23,10 +23,10 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
             public RabbitMqSubscriberHostedService(
                 string queueName,
                 ConnectionFactory connectionFactory,
-                IEnumerable<IMessageHandler> messageListeners)
+                IEnumerable<IMessageHandler> messageHandlers)
             {
                 this.queueName = queueName;
-                this.messageListeners = messageListeners;
+                this.messageHandlers = messageHandlers;
                 connection = connectionFactory.CreateConnection();
                 model = connection.CreateModel();
             }
@@ -42,7 +42,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
             {
                 model.QueueDeclare(queueName, true, false, false);
 
-                foreach (var messageListener in messageListeners)
+                foreach (var messageListener in messageHandlers)
                 {
                     model.QueueBind(queueName, messageListener.ExchangeName,
                         messageListener.RoutingKey);
@@ -52,7 +52,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
 
                 consumer.Received += async (source, basicDeliverEventArgs) =>
                 {
-                    var mesageHandler = messageListeners.SingleOrDefault(x =>
+                    var mesageHandler = messageHandlers.SingleOrDefault(x =>
                         basicDeliverEventArgs.RoutingKey == x.RoutingKey
                         && basicDeliverEventArgs.Exchange == x.ExchangeName);
 

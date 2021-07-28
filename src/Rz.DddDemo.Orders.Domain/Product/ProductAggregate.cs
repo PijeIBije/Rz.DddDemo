@@ -1,7 +1,7 @@
 ﻿using Rz.DddDemo.Base.Domain.DomainEntity;
 using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
 
-namespace Rz.DddDemo.Orders.Domain.ProductAggregate
+namespace Rz.DddDemo.Orders.Domain.Product
 {
     public class ProductAggregate:DomainEntityBase<ProductId>
     {

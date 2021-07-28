@@ -1,6 +1,6 @@
 ﻿namespace Rz.DddDemo.Orders.Infrastructure.OrderRepository.EntityFrameworkWithDapper
 {
-    class OrderRepository
+    public class OrderRepository:Repos
     {
     }
 }

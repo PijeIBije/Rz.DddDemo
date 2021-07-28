@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rz.DddDemo.Base.Domain.DomainEntity;
+using Rz.DddDemo.Orders.Domain.Customer.Address;
 using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
 using Rz.DddDemo.Orders.Domain.Customer.DomainEvents;
 using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
@@ -41,9 +42,10 @@ namespace Rz.DddDemo.Orders.Domain.Customer
 
         public void Update(
             FirstName firstName,
-            LastName lastName)
+            LastName lastName,
+            IList<AddressValueObject> newAddresses)
         {
-            bool customerUpdated = false;
+            var customerUpdated = false;
 
             if (firstName != null && FirstName != firstName)
             {
@@ -57,7 +59,34 @@ namespace Rz.DddDemo.Orders.Domain.Customer
                 customerUpdated = true;
             }
 
-            if(customerUpdated) CustomerUpdated?.Invoke(new CustomerUpdatedDomainEvent(this));
+            var updatedAddresNames = new List<AddressName>();
+
+            foreach (var newAddress in newAddresses)
+            {
+                var existingAddress = Addresses.SingleOrDefault(x => x.Name == newAddress.Name);
+
+                if (existingAddress == null)
+                {
+                    this.addresses.Add(newAddress);
+                    customerUpdated = true;
+                }
+                else
+                {
+                    if (newAddress != existingAddress)
+                    {
+                        addresses.Remove(existingAddress);
+                        addresses.Add(newAddress);
+                        updatedAddresNames.Add(newAddress.Name);
+                        customerUpdated = true;
+                    }
+                }
+
+                var countRemoved = addresses.RemoveAll(x => newAddresses.All(y => y.Name != x.Name));
+
+                if (countRemoved > 0) customerUpdated = true;
+            }
+
+            if(customerUpdated) CustomerUpdated?.Invoke(new CustomerUpdatedDomainEvent(this,updatedAddresNames));
         }
 
         public void AddOrUpdateAddress(Address.AddressValueObject newAddress)

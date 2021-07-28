@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.DomainEventHandling.Interfaces;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
-using Rz.DddDemo.Orders.Domain.Parameters.DomainEvents;
+using Rz.DddDemo.Orders.Domain.AutoCancellationParameters.DomainEvents;
 
 namespace Rz.DddDemo.Orders.Application.DomainEvents
 {

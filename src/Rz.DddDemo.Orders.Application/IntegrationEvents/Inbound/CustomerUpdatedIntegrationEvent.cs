@@ -15,7 +15,5 @@ namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Inbound
         public LastName LastName { get; set; }
 
         public List<AddressValueObject> Addresses { get; set; }
-        
-        public List<AddressName> AddressesRemoved { get; set; }
     }
 }

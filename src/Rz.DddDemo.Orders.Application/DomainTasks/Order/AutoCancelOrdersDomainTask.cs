@@ -1,5 +1,5 @@
 ﻿using Rz.DddDemo.Base.Application.DomainTaskHandling.Interfaces;
-using Rz.DddDemo.Orders.Domain.Parameters.ValueObjects;
+using Rz.DddDemo.Orders.Domain.AutoCancellationParameters.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.DomainTasks.Order
 {

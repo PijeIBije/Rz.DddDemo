@@ -9,7 +9,7 @@ using Rz.DddDemo.Customers.Domain.DomainEvents;
 
 namespace Rz.DddDemo.Customers.Application.DomainEvents.Customer
 {
-    public class CustomerUpdatedDomainEventHandler:DomainEventHanlderBase<CustomerUpdatedDomainEvent>
+    public class CustomerUpdatedDomainEventHandler:DomainEventHanlderBase<CustomerChangedDomainEvent>
     {
         public CustomerUpdatedDomainEventHandler(
             DomainEventsHandler domainEventsHandler, 
@@ -17,9 +17,9 @@ namespace Rz.DddDemo.Customers.Application.DomainEvents.Customer
         {
         }
 
-        protected override Task HandleBody(CustomerUpdatedDomainEvent domainEvent)
+        protected override Task HandleBody(CustomerChangedDomainEvent domainEvent)
         {
-            RegisterIntegrationEvent(new CustomerUpdatedIntegrationEvent(domainEvent));
+            RegisterIntegrationEvent(new CustomerUpdatedIntegrationEvent(domainEvent.Source));
             return Task.CompletedTask;
         }
     }

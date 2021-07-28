@@ -6,10 +6,11 @@ using Rz.DddDemo.Customers.Domain.Address.ValueObjects;
 
 namespace Rz.DddDemo.Customers.Domain.DomainEvents
 {
-    public class CustomerUpdatedDomainEvent:DomainEventBase<CustomerAggregate>
+    public class CustomerChangedDomainEvent:DomainEventBase<CustomerAggregate>
     {
-        public CustomerUpdatedDomainEvent(CustomerAggregate source) : base(source)
+        public CustomerChangedDomainEvent(CustomerAggregate source) : base(source)
         {
+
         }
     }
 }

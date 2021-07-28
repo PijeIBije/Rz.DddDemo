@@ -28,7 +28,7 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
         {
             var customer = await customerRepository.GetById(command.CustomerId);
 
-            customer.CustomerChanged +=RegisterDomianEvent;
+            customer.CustomerChanged+=RegisterDomianEvent;
 
             customer.Update(
                 command.FirstName,

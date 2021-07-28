@@ -8,7 +8,7 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 {
     public class ClassMapping:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result)
+        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result, bool requireAllProperties)
         {
             var sourceType = source.GetType();
 

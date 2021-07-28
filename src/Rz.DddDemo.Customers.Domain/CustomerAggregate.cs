@@ -16,7 +16,7 @@ namespace Rz.DddDemo.Customers.Domain
         public DateOfBirth DateOfBirth { get; private set; }
         private readonly List<AddressEntity> addresses;
 
-        public event DomainEventHanlder<CustomerUpdatedDomainEvent> CustomerChanged; 
+        public event DomainEventHanlder<CustomerChangedDomainEvent> CustomerChanged; 
 
         public IReadOnlyList<AddressEntity> Addresses => addresses;
 
@@ -91,7 +91,7 @@ namespace Rz.DddDemo.Customers.Domain
                 changed = true;
             }
 
-            if (changed) CustomerChanged?.Invoke(new CustomerUpdatedDomainEvent(this));
+            if (changed) CustomerChanged?.Invoke(new CustomerChangedDomainEvent(this));
         }
 
         private bool AddOrUpdateAddress(AddressName addressName,
