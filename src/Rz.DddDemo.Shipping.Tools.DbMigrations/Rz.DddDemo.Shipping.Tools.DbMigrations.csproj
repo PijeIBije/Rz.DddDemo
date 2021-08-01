@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rz.DddDemo.Base.Domain\Rz.DddDemo.Base.Domain.csproj" />
+    <PackageReference Include="FluentMigrator" Version="3.2.17" />
   </ItemGroup>
 
 </Project>

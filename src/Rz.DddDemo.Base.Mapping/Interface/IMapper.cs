@@ -4,12 +4,12 @@ namespace Rz.DddDemo.Base.Mapping.Interface
 {
     public interface IMapper
     {
-        TResult Map<TSource, TResult>(TSource source, bool requireAllProperties = true);
+        TResult Map<TSource, TResult>(TSource source, bool allowPartialMapping = true);
 
-        bool TryMap<TSource, TResult>(TSource source, out TResult result, bool requireAllProperties = true);
+        bool TryMap<TSource, TResult>(TSource source, out TResult result, bool allowPartialMapping = true);
 
-        bool TryMap(object source, Type resultType, out object result, bool requireAllProperties = true);
+        object Map(object source, Type resultType, bool allowPartialMapping = true);
 
-        bool Map(object source, Type resultType, out object result, bool requireAllProperties = true);
+        bool TryMap(object source, out object result, Type resultType, bool allowPartialMapping = true);
     }
 }

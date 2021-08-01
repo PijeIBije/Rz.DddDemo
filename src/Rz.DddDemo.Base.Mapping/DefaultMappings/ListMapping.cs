@@ -8,7 +8,8 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 {
     public class ListMapping:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result)
+        public bool TryMap(object source, Type resultType, out object result, bool allowPartialMapping,
+            IMapper mainMapper)
         {
             var sourceType = source.GetType();
 
@@ -44,9 +45,9 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
             var resultItemType = genericArguments.Single();
 
-            var genericListType = typeof(List<>).MakeGenericType(sourceItemType);
+            var genericListType = typeof(List<>).MakeGenericType(resultItemType);
 
-            if(resultType.IsAssignableFrom(genericListType))
+            if(!resultType.IsAssignableFrom(genericListType))
             {
                 result = default;
                 return false;
@@ -58,9 +59,10 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
             foreach (var item in (IEnumerable)source)
             {
-                if (!mainMapper.TryMap(item, resultItemType, out var mappedValue))
+                if (!mainMapper.TryMap(item, out var mappedValue,resultItemType,allowPartialMapping))
                 {
                     result = default;
+                    if(allowPartialMapping) continue;
                     return false;
                 }
 

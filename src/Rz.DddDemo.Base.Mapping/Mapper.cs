@@ -14,7 +14,7 @@ namespace Rz.DddDemo.Base.Mapping
             this.valueMappings = valueMappings;
         }
 
-        public TResult Map<TSource, TResult>(TSource source, bool requireAllProperties = true)
+        public TResult Map<TSource, TResult>(TSource source, bool allowPartialMapping = true)
         {
             if (!TryMap(source, out TResult  result))
             {
@@ -24,9 +24,9 @@ namespace Rz.DddDemo.Base.Mapping
             return result;
         }
 
-        public bool TryMap<TSource, TResult>(TSource source, out TResult result, bool requireAllProperties = true)
+        public bool TryMap<TSource, TResult>(TSource source, out TResult result, bool allowPartialMapping = true)
         {
-            if (!TryMap(source,typeof(TResult), out var resultAsObject))
+            if (!TryMap(source, out var resultAsObject, typeof(TResult)))
             {
                 result = default;
                 return false;
@@ -36,19 +36,17 @@ namespace Rz.DddDemo.Base.Mapping
             return true;
         }
 
-        public bool Map(object source, Type resultType, out object result, bool requireAllProperties = true)
+        public object Map(object source, Type resultType, bool allowPartialMapping = true)
         {
-            if (!TryMap(source, resultType, out var resultAsObject))
+            if (!TryMap(source, out var result, resultType, allowPartialMapping))
             {
-                result = default;
-                return false;
+                throw new InvalidOperationException($"Cannot map {source.GetType().FullName} to {resultType.FullName}");
             }
 
-            result = resultAsObject;
-            return true;
+            return result;
         }
 
-        public bool TryMap(object source, Type resultType, out object result, bool requireAllProperties = true)
+        public bool TryMap(object source, out object result, Type resultType, bool allowPartialMapping = true)
         {
             if (source == null)
             {
@@ -58,7 +56,7 @@ namespace Rz.DddDemo.Base.Mapping
 
             object valueMapped = default;
 
-            if (valueMappings.Any(x => x.TryMap(source, resultType, this, out valueMapped, requireAllProperties)))
+            if (valueMappings.Any(x => x.TryMap(source, resultType, out valueMapped, allowPartialMapping, this)))
             {
                 result = valueMapped; 
                 return true;

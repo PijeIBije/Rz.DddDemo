@@ -6,11 +6,12 @@ namespace Rz.DddDemo.Base.Mapping.DomainObjects
 {
     public class ObjectToSingleValueObject:ValueMappingBase<object,ISingleValueObject>
     {
-        public override bool TryMap(object source, Type resultType, IMapper mainMapper, out ISingleValueObject result)
+        public override bool TryMap(object source, Type resultType, IMapper mainMapper, out ISingleValueObject result,
+            bool allowPartialMapping)
         {
             var valueObject = (ISingleValueObject)Activator.CreateInstance(resultType, source);
 
-            result= valueObject;
+            result = valueObject;
 
             return true;
         }

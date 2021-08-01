@@ -79,6 +79,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rz.DddDemo.Legacy.TrackingS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rz.DddDemo.Base.Infrastructure.EntityFramework", "Rz.DddDemo.Base.Infrastructure.EntityFramework\Rz.DddDemo.Base.Infrastructure.EntityFramework.csproj", "{9BDDBC73-5A7D-4038-A7F6-8320789D6F54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rz.DddDemo.Shipping.Tools.DbMigrations", "Rz.DddDemo.Shipping.Tools.DbMigrations\Rz.DddDemo.Shipping.Tools.DbMigrations.csproj", "{14B514CE-E0DE-4625-98D3-EB3DC2F651AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,10 @@ Global
 		{9BDDBC73-5A7D-4038-A7F6-8320789D6F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BDDBC73-5A7D-4038-A7F6-8320789D6F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BDDBC73-5A7D-4038-A7F6-8320789D6F54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B514CE-E0DE-4625-98D3-EB3DC2F651AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B514CE-E0DE-4625-98D3-EB3DC2F651AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B514CE-E0DE-4625-98D3-EB3DC2F651AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B514CE-E0DE-4625-98D3-EB3DC2F651AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,6 +261,7 @@ Global
 		{6EDCA90D-06EE-4A80-B923-AE0036985225} = {613F9344-6127-490F-B99B-EDD2C938F013}
 		{9F0EBD28-E31B-42D0-8521-EA2ABB99F32D} = {613F9344-6127-490F-B99B-EDD2C938F013}
 		{9BDDBC73-5A7D-4038-A7F6-8320789D6F54} = {F4C6E24D-FDF3-4299-9037-6FE29FD13FE8}
+		{14B514CE-E0DE-4625-98D3-EB3DC2F651AA} = {8976864C-7F63-4AE5-97C2-05FEEEB7F2FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D13804E-E9BB-419A-BC9F-FBB30EA3866A}

@@ -5,7 +5,8 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 {
     public class ValueTypeMapping:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result)
+        public bool TryMap(object source, Type resultType, out object result, bool allowPartialMapping,
+            IMapper mainMapper)
         {
             if (resultType.IsInstanceOfType(source))
             {

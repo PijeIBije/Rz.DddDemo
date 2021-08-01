@@ -5,11 +5,12 @@ namespace Rz.DddDemo.Base.Mapping
 {
     public abstract class ValueMappingBase<TSource,TResult>:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result)
+        public bool TryMap(object source, Type resultType, out object result, bool allowPartialMapping,
+            IMapper mainMapper)
         {
             if (source is TSource sourceAsTSource && typeof(TResult).IsAssignableFrom(resultType))
             {
-                if (TryMap(sourceAsTSource, resultType, mainMapper, out var resultObject))
+                if (TryMap(sourceAsTSource, resultType, mainMapper, out var resultObject, allowPartialMapping))
                 {
                     result = resultObject;
                     return true;
@@ -20,6 +21,6 @@ namespace Rz.DddDemo.Base.Mapping
             return false;
         }
 
-        public abstract bool TryMap(TSource source, Type resultType, IMapper mainMapper, out TResult result);
+        public abstract bool TryMap(TSource source, Type resultType, IMapper mainMapper, out TResult result, bool allowPartialMapping);
     }
 }

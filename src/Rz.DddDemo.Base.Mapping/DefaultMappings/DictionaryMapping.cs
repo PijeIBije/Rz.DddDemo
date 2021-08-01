@@ -7,7 +7,8 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 {
     public class DictionaryMapping:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result)
+        public bool TryMap(object source, Type resultType, out object result, bool allowPartialMapping,
+            IMapper mainMapper)
         {
             var sourceType = source.GetType();
 
@@ -36,7 +37,7 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
             genericArguments = resultType.GetGenericArguments();
 
-            if (genericArguments.Length != 1)
+            if (genericArguments.Length != 2)
             {
                 result = default;
                 return false;
@@ -47,7 +48,7 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
             var genericDictionaryType = typeof(Dictionary<,>).MakeGenericType(resultKeyType,resultValueType);
 
-            if (resultType.IsAssignableFrom(genericDictionaryType))
+            if (!resultType.IsAssignableFrom(genericDictionaryType))
             {
                 result = default;
                 return false;
@@ -63,9 +64,10 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
             {
                 var value = sourceAsDictionary[key];
 
-                if (!mainMapper.TryMap(key, resultKeyType, out var mappedKey) || !mainMapper.TryMap(value, resultValueType, out var mappedValue))
+                if (!mainMapper.TryMap(key, out var mappedKey, resultKeyType, allowPartialMapping) || !mainMapper.TryMap(value , out var mappedValue, resultValueType, allowPartialMapping))
                 {
                     result = default;
+                    if(allowPartialMapping) continue;
                     return false;
                 }
 

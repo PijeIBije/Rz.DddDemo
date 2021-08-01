@@ -8,11 +8,12 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 {
     public class ClassMapping:IValueMapping
     {
-        public bool TryMap(object source, Type resultType, IMapper mainMapper, out object result, bool requireAllProperties)
+        public bool TryMap(object source, Type resultType, out object result, bool allowPartialMapping,
+            IMapper mainMapper)
         {
             var sourceType = source.GetType();
 
-            if (!sourceType.IsClass || resultType.IsClass)
+            if (!sourceType.IsClass || !resultType.IsClass)
             {
                 result = default;
                 return false;
@@ -22,11 +23,11 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
             ConstructorInfo selectedConstructorInfo = null;
 
-            foreach (var constructorInfo in sourceType.GetConstructors(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var constructorInfo in resultType.GetConstructors(BindingFlags.Instance | BindingFlags.Public))
             {
                 var constructorParamterInfos = constructorInfo.GetParameters();
 
-                if (constructorParamterInfos.Length > selectedConstructorParamterInfos.Length)
+                if (constructorParamterInfos.Length >= selectedConstructorParamterInfos.Length)
                 {
                     selectedConstructorParamterInfos = constructorParamterInfos;
                     selectedConstructorInfo = constructorInfo;
@@ -60,16 +61,17 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
 
                     var sourceValue = sourcePropertyInfo.GetValue(source);
 
-                    if (!mainMapper.TryMap(sourceValue,selectedConstructorParamterInfo.ParameterType , out var mappedValue))
+                    if (!mainMapper.TryMap(sourceValue, out var mappedValue, selectedConstructorParamterInfo.ParameterType, allowPartialMapping))
                     {
                         result = default;
+                        if(allowPartialMapping) continue;
                         return false;
                     }
 
                     arguments.Add(mappedValue);
                 }
 
-                result = Activator.CreateInstance(resultType, arguments.ToList());
+                result = Activator.CreateInstance(resultType, arguments.ToArray());
 
                 return true;
             }
@@ -86,9 +88,14 @@ namespace Rz.DddDemo.Base.Mapping.DefaultMappings
                 if (sourcePropertyInfo == null) continue;
                 var value = sourcePropertyInfo.GetValue(source);
 
-                if (mainMapper.TryMap(value,resultPropertyInfo.PropertyType, out var mappedValue))
+                if (mainMapper.TryMap(value, out var mappedValue, resultPropertyInfo.PropertyType, allowPartialMapping))
                 {
                     resultPropertyInfo.SetValue(result, mappedValue);
+                }
+                else
+                {
+                    if(allowPartialMapping)continue;
+                    return false;
                 }
             }
 

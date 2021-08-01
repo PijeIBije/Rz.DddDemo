@@ -6,7 +6,8 @@ namespace Rz.DddDemo.Base.Mapping.DomainObjects
 {
     public class SingleValueToObjectMapping:ValueMappingBase<ISingleValueObject,object>
     {
-        public override bool TryMap(ISingleValueObject source, Type resultType, IMapper mainMapper, out object result)
+        public override bool TryMap(ISingleValueObject source, Type resultType, IMapper mainMapper, out object result,
+            bool allowPartialMapping)
         {
             result = source.Value;
             return true;
