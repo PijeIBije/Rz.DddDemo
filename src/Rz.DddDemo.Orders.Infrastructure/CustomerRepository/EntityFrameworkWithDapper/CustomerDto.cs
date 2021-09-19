@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Customer;
 
 namespace Rz.DddDemo.Orders.Infrastructure.CustomerRepository.EntityFrameworkWithDapper
 {

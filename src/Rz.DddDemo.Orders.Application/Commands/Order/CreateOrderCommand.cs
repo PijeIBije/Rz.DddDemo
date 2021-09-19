@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Rz.DddDemo.Base.Application.CommandHandling.Interfaces;
+using Rz.DddDemo.Orders.Domain.Customer;
 using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.Commands.Order
 {

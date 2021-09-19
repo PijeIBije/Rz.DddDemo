@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Rz.DddDemo.Base.Domain.ValueObject;
 
-namespace Rz.DddDemo.Shipping.Domain.Shipment.ValueObjects
+namespace Rz.DddDemo.Shipping.Domain.Shipment
 {
     public class ShipmentId:GuidValueObjectBase
     {

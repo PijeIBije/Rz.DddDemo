@@ -6,7 +6,7 @@ using Rz.DddDemo.Customers.Domain;
 
 namespace Rz.DddDemo.Customers.Infrastructure.IntegrationEventPublishers.RabbitMq
 {
-    public class CustomerUpdatedPublisher : RabbitMqIntegrationEventPublisherBase<CustomerUpdatedIntegrationEvent, CustomerUpdatedIntegraionEventDto>
+    public class CustomerUpdatedIntegrationEventPublisher : RabbitMqIntegrationEventPublisherBase<CustomerUpdatedIntegrationEvent, CustomerUpdatedIntegraionEventDto>
     {
         private readonly IMapper mapper;
 
@@ -19,7 +19,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.IntegrationEventPublishers.RabbitM
                 RoutingKey = Schemas.MessageQueue.RabbitMq.Names.Topics.CustomerCreated
             };
 
-        public CustomerUpdatedPublisher(
+        public CustomerUpdatedIntegrationEventPublisher(
             ConnectionFactory connectionFactory,
             IMapper mapper) : base(connectionFactory, Config)
         {

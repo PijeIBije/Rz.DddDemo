@@ -1,10 +1,10 @@
-﻿using Rz.DddDemo.Orders.Domain.Customer.Address;
+﻿using Rz.DddDemo.Orders.Domain.Customer;
+using Rz.DddDemo.Orders.Domain.Customer.Address;
 using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
 
-namespace Rz.DddDemo.Orders.Domain.Order.ValueObjects
+namespace Rz.DddDemo.Orders.Domain.Order
 {
-    public class ShippingAddress
+    public class ShippingAddressValueObject
     {
         public AddressName Name { get; }
         public AddressLine AddressLine1 { get; }
@@ -18,7 +18,7 @@ namespace Rz.DddDemo.Orders.Domain.Order.ValueObjects
 
         public LastName LastName { get;}
 
-        public ShippingAddress(FirstName firstName, LastName lastName, AddressValueObject address)
+        public ShippingAddressValueObject(FirstName firstName, LastName lastName, AddressValueObject address)
         {
             FirstName = firstName;
             LastName = lastName;

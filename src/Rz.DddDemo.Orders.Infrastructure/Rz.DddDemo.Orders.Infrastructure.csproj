@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Rz.DddDemo.Orders.Application\Rz.DddDemo.Orders.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SqlDb\" />
+  </ItemGroup>
+
 </Project>

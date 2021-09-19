@@ -1,5 +1,5 @@
-﻿using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
+﻿using Rz.DddDemo.Orders.Domain.Order;
+using Rz.DddDemo.Orders.Domain.Product;
 
 namespace Rz.DddDemo.Orders.Application.Commands.Order
 {

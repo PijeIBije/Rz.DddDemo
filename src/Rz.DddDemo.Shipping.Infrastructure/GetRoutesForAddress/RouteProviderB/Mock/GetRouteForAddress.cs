@@ -17,7 +17,13 @@ namespace Rz.DddDemo.Shipping.Infrastructure.GetRoutesForAddress.RouteProviderB.
         public async Task<List<AddressValueObject>> GetRouteForAddress(AddressValueObject sourceAddress,
             CancellationToken cancellationToken)
         {
-
+            return new List<AddressValueObject>
+            {
+                new AddressValueObject(
+                    "FirstName1",
+                    "LastName1",
+                    "")
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ using Rz.DddDemo.Customers.Application.Commands.Customer;
 using Rz.DddDemo.Customers.Application.Queries.Customer;
 using Rz.DddDemo.Customers.Presentation.WebApi.Controllers.Model;
 using Rz.DddDemo.Base.Presentation.WebApi.IncludesMapping;
+using Rz.DddDemo.Base.Presentation.WebApi.Validation;
 using Rz.DddDemo.Base.Presentation.WebApi.Validation.Mapping.Interfaces;
 using Rz.DddDemo.Customers.Domain.Address.ValueObjects;
 using Rz.DddDemo.Customers.Domain.ValueObjects;
@@ -46,8 +47,9 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("{id}")]
         [ProducesResponseType(typeof(CustomerResource),(int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetById(Guid id, List<string> includes)
+        public async Task<IActionResult> GetById([ValidateAsType(typeof(CustomerId))]Guid id, [FromQuery]List<string> includes)
         {
             var includesObject = includesMapper.Map<CustomerIncludes>(includes);
 
@@ -63,8 +65,8 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(CustomerResource), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll(List<string> includes)
+        [ProducesResponseType(typeof(IEnumerable<CustomerResource>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAll([FromQuery]List<string> includes)
         {
             var includesObject = includesMapper.Map<CustomerIncludes>(includes);
 
@@ -78,7 +80,9 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
             return Ok(results.Select(x=>mapper.Map<CustomerResult,CustomerResource>(x)));
         }
 
-        public async Task<IActionResult> Post([FromBody] CustomerResource customerResource, List<string> includes)
+        [HttpPost]
+        [ProducesResponseType(typeof(CustomerResource), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Post([FromBody] CustomerResource customerResource, [FromQuery]List<string> includes)
         {
             var command = new CreateCustomerCommand
             {
@@ -104,11 +108,13 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
             return Ok(mapper.Map<CustomerResult, CustomerResult>(results.Single()));
         }
 
-        public async Task<IActionResult> Patch([FromQuery]Guid customerId, [FromBody] CustomerPatch customerPatch, List<string> includes)
+        [HttpPatch]
+        [Route("{id}")]
+        public async Task<IActionResult> Patch([FromQuery]Guid id, [FromBody] CustomerPatch customerPatch, [FromQuery]List<string> includes)
         {
             var command = new UpdateCustomerCommand()
             {
-                CustomerId = customerId,
+                CustomerId = id,
                 DateOfBirth = customerPatch.DateOfBirth,
                 LastName = customerPatch.LastName,
                 FirstName = customerPatch.FirstName,
@@ -122,7 +128,7 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi.Controllers
 
             var query = new CustomerQuery
             {
-                CustomerId = customerId,
+                CustomerId = id,
                 CustomerIncludes = includesObject
             };
 

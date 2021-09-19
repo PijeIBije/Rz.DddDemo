@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rz.DddDemo.Orders.Application.Interfaces;
 using Rz.DddDemo.Orders.Domain.Product;
-using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Infrastructure.ProductRepository.Mock
 {

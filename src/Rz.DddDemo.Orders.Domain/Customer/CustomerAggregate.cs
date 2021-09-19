@@ -4,8 +4,6 @@ using System.Linq;
 using Rz.DddDemo.Base.Domain.DomainEntity;
 using Rz.DddDemo.Orders.Domain.Customer.Address;
 using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Customer.DomainEvents;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Domain.Customer
 {
@@ -16,15 +14,15 @@ namespace Rz.DddDemo.Orders.Domain.Customer
         public FirstName FirstName { get; private set; }
         public LastName LastName { get; private set; }
 
-        private readonly List<Address.AddressValueObject> addresses;
+        private readonly List<AddressValueObject> addresses;
 
-        public IReadOnlyList<Address.AddressValueObject> Addresses => addresses;
+        public IReadOnlyList<AddressValueObject> Addresses => addresses;
 
         public CustomerAggregate(
             CustomerId id,
             FirstName firstName,
             LastName lastName,
-            IReadOnlyList<Address.AddressValueObject> addresses):base(id)
+            IReadOnlyList<AddressValueObject> addresses):base(id)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -34,7 +32,7 @@ namespace Rz.DddDemo.Orders.Domain.Customer
         public CustomerAggregate(
             FirstName firstName,
             LastName lastName,
-            IReadOnlyList<Address.AddressValueObject> addresses) : this(new CustomerId(), firstName, lastName,
+            IReadOnlyList<AddressValueObject> addresses) : this(new CustomerId(), firstName, lastName,
             addresses)
         {
 
@@ -67,7 +65,7 @@ namespace Rz.DddDemo.Orders.Domain.Customer
 
                 if (existingAddress == null)
                 {
-                    this.addresses.Add(newAddress);
+                    addresses.Add(newAddress);
                     customerUpdated = true;
                 }
                 else
@@ -89,7 +87,7 @@ namespace Rz.DddDemo.Orders.Domain.Customer
             if(customerUpdated) CustomerUpdated?.Invoke(new CustomerUpdatedDomainEvent(this,updatedAddresNames));
         }
 
-        public void AddOrUpdateAddress(Address.AddressValueObject newAddress)
+        public void AddOrUpdateAddress(AddressValueObject newAddress)
         {
             var currentAddress = addresses.SingleOrDefault(x => x.Name == newAddress.Name);
 
@@ -99,9 +97,6 @@ namespace Rz.DddDemo.Orders.Domain.Customer
             }
 
             addresses.Add(newAddress);
-
-
-
         }
 
         public void RemoveAddress(AddressName addressName)

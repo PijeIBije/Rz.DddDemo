@@ -8,7 +8,7 @@ namespace Rz.DddDemo.Customers.Domain.DomainEvents
 {
     public class CustomerChangedDomainEvent:DomainEventBase<CustomerAggregate>
     {
-        public CustomerChangedDomainEvent(CustomerAggregate source) : base(source)
+        public CustomerChangedDomainEvent(CustomerAggregate id) : base(id)
         {
 
         }

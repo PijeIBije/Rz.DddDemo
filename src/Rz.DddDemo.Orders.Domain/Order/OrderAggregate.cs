@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Rz.DddDemo.Base.Domain;
 using Rz.DddDemo.Base.Domain.DomainEntity;
-using Rz.DddDemo.Orders.Domain.Order.DomainEvents;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
 using Rz.DddDemo.Orders.Domain.Product;
-using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Domain.Order
 {
@@ -19,13 +16,13 @@ namespace Rz.DddDemo.Orders.Domain.Order
 
         public bool IsCancelled { get; private set; }
 
-        public ShippingAddress ShippingAddress { get; private set; }
+        public ShippingAddressValueObject ShippingAddress { get; private set; }
 
         private readonly List<OrderLineEntity> orderLines;
 
         public IReadOnlyList<OrderLineEntity> OrderLines => orderLines;
 
-        public OrderAggregate(OrderId orderId, ShippingAddress shippingAddress, bool isShipped, IEnumerable<OrderLineEntity> orderLines, bool isCancelled):base(orderId)
+        public OrderAggregate(OrderId orderId, ShippingAddressValueObject shippingAddress, bool isShipped, IEnumerable<OrderLineEntity> orderLines, bool isCancelled):base(orderId)
         {
             ShippingAddress = shippingAddress;
             IsShipped = isShipped;
@@ -33,7 +30,7 @@ namespace Rz.DddDemo.Orders.Domain.Order
             IsCancelled = isCancelled;
         }
 
-        public OrderAggregate(ShippingAddress shippingAddress,IEnumerable<OrderLineEntity> orderLines):this(
+        public OrderAggregate(ShippingAddressValueObject shippingAddress,IEnumerable<OrderLineEntity> orderLines):this(
             new OrderId(),
             shippingAddress,
             false,orderLines,false)
@@ -65,7 +62,7 @@ namespace Rz.DddDemo.Orders.Domain.Order
             orderLines.Remove(orderLine);
         }
 
-        public void UpdateShippingAddress(ShippingAddress newShippingAddress)
+        public void UpdateShippingAddress(ShippingAddressValueObject newShippingAddress)
         {
             Guard.AgainstNullValue(newShippingAddress,nameof(newShippingAddress));
 

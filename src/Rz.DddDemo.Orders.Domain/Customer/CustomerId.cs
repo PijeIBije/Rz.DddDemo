@@ -1,7 +1,7 @@
 ﻿using System;
 using Rz.DddDemo.Base.Domain.ValueObject;
 
-namespace Rz.DddDemo.Orders.Domain.Customer.ValueObjects
+namespace Rz.DddDemo.Orders.Domain.Customer
 {
     public class CustomerId:GuidValueObjectBase
     {

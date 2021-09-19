@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Order;
 
 namespace Rz.DddDemo.Orders.Application.Queries
 {
@@ -11,6 +11,6 @@ namespace Rz.DddDemo.Orders.Application.Queries
 
         public bool IsCancelled { get; private set; }
 
-        public ShippingAddress ShippingAddress { get; private set; }
+        public ShippingAddressValueObject ShippingAddress { get; private set; }
     }
 }

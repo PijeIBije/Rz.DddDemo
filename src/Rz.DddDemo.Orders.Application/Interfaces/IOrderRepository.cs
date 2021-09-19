@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Rz.DddDemo.Orders.Domain.Customer;
 using Rz.DddDemo.Orders.Domain.Customer.Address.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
 using Rz.DddDemo.Orders.Domain.Order;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.Interfaces
 {

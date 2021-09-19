@@ -7,7 +7,6 @@ using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
 using Rz.DddDemo.Orders.Application.Interfaces;
 using Rz.DddDemo.Orders.Domain.Order;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Application.Commands.Order
 {
@@ -50,7 +49,7 @@ namespace Rz.DddDemo.Orders.Application.Commands.Order
 
             var address = customer.Addresses.SingleOrDefault(x => x.Name == command.AddressName);
 
-            var shippingAddress = new ShippingAddress(customer.FirstName,customer.LastName,address);
+            var shippingAddress = new ShippingAddressValueObject(customer.FirstName,customer.LastName,address);
 
             var order = new OrderAggregate(shippingAddress,orderLines);
 

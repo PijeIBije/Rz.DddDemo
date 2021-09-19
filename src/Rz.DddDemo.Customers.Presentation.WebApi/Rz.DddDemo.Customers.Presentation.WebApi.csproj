@@ -19,6 +19,8 @@
     <ProjectReference Include="..\Rz.DddDemo.Customers.Application\Rz.DddDemo.Customers.Application.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle\Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Presentation.WebApi\Rz.DddDemo.Base.Presentation.WebApi.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Customers.Domain\Rz.DddDemo.Customers.Domain.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Customers.Infrastructure\Rz.DddDemo.Customers.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

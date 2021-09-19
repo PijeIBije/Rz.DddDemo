@@ -11,6 +11,7 @@ using Rz.DddDemo.Customers.Presentation.WebApi.Controllers;
 using Rz.DddDemo.Base.Presentation.WebApi.ModelBinding;
 using Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle;
 using Rz.DddDemo.Base.Presentation.WebApi.Validation;
+using Rz.DddDemo.Customers.Presentation.WebApi.Di;
 
 namespace Rz.DddDemo.Customers.Presentation.WebApi
 {
@@ -36,6 +37,10 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi
                     swaggerGenOptions.UseInlineDefinitionsForEnums();
                     swaggerGenOptions.DescribeAllParametersInCamelCase();
                 })
+                .AddInfrastructure(Configuration)
+                .AddPrimaryAdapters()
+                .AddSecondaryAdapters()
+                .AddWebApiExtensions()
                 .AddControllers(
                     config => { config.ModelBinderProviders.Insert(0, new StringEnumerableModelBinderProvider()); })
                 .AddCustomInvalidModelStateRespone()

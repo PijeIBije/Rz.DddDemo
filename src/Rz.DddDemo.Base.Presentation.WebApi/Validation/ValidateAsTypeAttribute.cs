@@ -23,7 +23,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.Validation
 
             try
             {
-                mapper.Map(value, Type, out _);
+                mapper.Map(value, Type);
             }
             catch (Exception exception)
             {

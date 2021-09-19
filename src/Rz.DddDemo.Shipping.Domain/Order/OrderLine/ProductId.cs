@@ -1,11 +1,16 @@
 ﻿using System;
 using Rz.DddDemo.Base.Domain.ValueObject;
 
-namespace Rz.DddDemo.Orders.Domain.Product.ValueObjects
+namespace Rz.DddDemo.Shipping.Domain.Order.OrderLine
 {
     public class ProductId:GuidValueObjectBase
     {
         public ProductId(Guid value):base(value)
+        {
+            
+        }
+
+        public ProductId()
         {
             
         }

@@ -1,6 +1,6 @@
 ﻿using Rz.DddDemo.Base.Domain.ValueObject;
 
-namespace Rz.DddDemo.Orders.Domain.Order.ValueObjects
+namespace Rz.DddDemo.Orders.Domain.Order
 {
     public class Quantity:RangedValueObjectBase<int>
     {

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Rz.DddDemo.Orders.Application.Interfaces;
 using Rz.DddDemo.Orders.Domain.Customer;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
 
 namespace Rz.DddDemo.Orders.Infrastructure.CustomerRepository.EntityFrameworkWithDapper
 {

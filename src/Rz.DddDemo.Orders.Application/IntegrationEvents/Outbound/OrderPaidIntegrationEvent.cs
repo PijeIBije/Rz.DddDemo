@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
-using Rz.DddDemo.Orders.Domain.Order.DomainEvents;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Order;
 
 namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Outbound
 {

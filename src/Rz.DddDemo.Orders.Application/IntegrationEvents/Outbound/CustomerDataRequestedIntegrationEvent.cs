@@ -1,5 +1,5 @@
 ﻿using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
-using Rz.DddDemo.Orders.Domain.Customer.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Customer;
 
 namespace Rz.DddDemo.Orders.Application.IntegrationEvents.Outbound
 {

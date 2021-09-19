@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -38,7 +39,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
             mongoSharedTransaction.CommitEvent += MongoSharedTransactionCommitEvent;
         }
 
-        private void MongoSharedTransactionCommitEvent(List<Task> transactionTasks)
+        private void MongoSharedTransactionCommitEvent(List<Func<Task>> transactionTasks)
         {
             //transactionTasks.Add(Commit());
             
@@ -61,8 +62,9 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
                    .BulkWriteAsync(writeModels, new BulkWriteOptions { IsOrdered = false });
            });
 
-           transactionTasks.Add(task);
+           transactionTasks.Add(()=>task);
 
+           /*
             transactionTasks.Add(new Task(async () =>
             {
                 var customerDtos = EntityCache.GetToSave<CustomerAggregate>().Select(x=>mapper.Map<CustomerAggregate,CustomerDto>(x)).ToList();
@@ -79,7 +81,7 @@ namespace Rz.DddDemo.Customers.Infrastructure.CustomerRepository.MongoDb
 
                 await MongoDb.GetCollection<CustomerDto>(Schema.CustomersCollection)
                     .BulkWriteAsync(writeModels, new BulkWriteOptions { IsOrdered = false });
-            }));
+            }));*/
 
             //transactionTasks.Add(task);
         }

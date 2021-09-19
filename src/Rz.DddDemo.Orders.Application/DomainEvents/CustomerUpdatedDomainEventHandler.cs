@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Orders.Application.Interfaces;
-using Rz.DddDemo.Orders.Domain.Customer.DomainEvents;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Customer;
+using Rz.DddDemo.Orders.Domain.Order;
 
 namespace Rz.DddDemo.Orders.Application.DomainEvents
 {
@@ -18,14 +18,14 @@ namespace Rz.DddDemo.Orders.Application.DomainEvents
 
         protected override async Task HandleBody(CustomerUpdatedDomainEvent domainEvent)
         {
-            var customer = domainEvent.Source;
+            var customer = domainEvent.Id;
             
             var orders = (await orderRepository.GetNonShippedWithAddressNamesOrCustomerId(domainEvent.UpdatedAddressNames,customer.Id)).ToList();
 
             foreach (var order in orders)
             {
                 order.OrderUpdated += RegisterDomianEvent;
-                order.UpdateShippingAddress(new ShippingAddress(customer.FirstName,customer.LastName,customer.Addresses.Single(x=>x.Name == order.ShippingAddress.Name)));
+                order.UpdateShippingAddress(new ShippingAddressValueObject(customer.FirstName,customer.LastName,customer.Addresses.Single(x=>x.Name == order.ShippingAddress.Name)));
             }
 
             await orderRepository.Save(orders);

@@ -1,16 +1,15 @@
 ﻿using System;
 using Rz.DddDemo.Base.Domain.DomainEntity;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
-using Rz.DddDemo.Orders.Domain.Product.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Product;
 
 namespace Rz.DddDemo.Orders.Domain.Order
 {
-    public class OrderLineEntity:DomainEntityBase<ProductId>
+    public class OrderLineEntity:DomainEntityBase<OrderLineId>
     {
         public OrderLineEntity(
             ProductId productId, 
             decimal productPrice,
-            Quantity quantity):base(productId)
+            Quantity quantity):base(new OrderLineId(productId))
         {
             ProductId = productId;
             ProductPrice = productPrice;

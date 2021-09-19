@@ -25,7 +25,7 @@ namespace Rz.DddDemo.Base.Mapping.Tests
                 new ValueTypeMapping(),
             };
 
-            mapper = new Mapping.Mapper(valueMappings);
+            mapper = new Mapper(valueMappings);
         }
 
         public static IEnumerable<object> TestCases =>

@@ -1,6 +1,6 @@
 ﻿using Rz.DddDemo.Base.Application.QueryHandling;
 using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
-using Rz.DddDemo.Orders.Domain.Order.ValueObjects;
+using Rz.DddDemo.Orders.Domain.Order;
 
 namespace Rz.DddDemo.Orders.Application.Queries
 {
