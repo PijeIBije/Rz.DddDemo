@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Rz.DddDemo.Customers.Infrastructure\Rz.DddDemo.Customers.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Customer\" />
+  </ItemGroup>
+
 </Project>

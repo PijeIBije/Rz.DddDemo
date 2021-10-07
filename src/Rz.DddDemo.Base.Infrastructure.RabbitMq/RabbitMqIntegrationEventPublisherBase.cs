@@ -1,5 +1,8 @@
 ﻿using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using RabbitMQ.Client;
+using Rz.DddDemo.Base.Application;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 
 namespace Rz.DddDemo.Base.Infrastructure.RabbitMq
@@ -18,8 +21,9 @@ namespace Rz.DddDemo.Base.Infrastructure.RabbitMq
             this.config = config;
         }
 
+        public abstract TIntegrationEventDto ToIntegrationEventDto(TIntegraionEvent integrationEvent);
 
-        public void Publish(TIntegraionEvent integrationEvent)
+        public Task<NoResult> Handle(TIntegraionEvent integrationEvent, CancellationToken cancellationToken)
         {
             var connection = connectionFactory.CreateConnection();
             var model = connection.CreateModel();
@@ -29,8 +33,8 @@ namespace Rz.DddDemo.Base.Infrastructure.RabbitMq
             var bytes = JsonSerializer.SerializeToUtf8Bytes(integrationEventDto);
 
             model.BasicPublish(config.ExchangeName, config.RoutingKey, config.Mandatory, null, bytes);
-        }
 
-        public abstract TIntegrationEventDto ToIntegrationEventDto(TIntegraionEvent integrationEvent);
+            return Task.FromResult(NoResult.Instance);
+        }
     }
 }

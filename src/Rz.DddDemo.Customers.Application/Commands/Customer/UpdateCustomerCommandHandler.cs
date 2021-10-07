@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Rz.DddDemo.Base.Application;
 using Rz.DddDemo.Base.Application.CommandHandling;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
-using Rz.DddDemo.Customers.Application.Commands.Interfaces;
 using Rz.DddDemo.Customers.Application.IntegrationEvents.Outbound;
+using Rz.DddDemo.Customers.Application.Interfaces;
 
 namespace Rz.DddDemo.Customers.Application.Commands.Customer
 {
@@ -24,18 +25,18 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
             this.customerRepository = customerRepository;
         }
 
-        protected override async Task HandleBody(UpdateCustomerCommand command)
+        protected override async Task<NoResult> HandleBody(UpdateCustomerCommand command)
         {
             var customer = await customerRepository.GetById(command.CustomerId);
 
             customer.CustomerChanged+=RegisterDomianEvent;
 
             customer.Update(
-                command.FirstName,
-                command.LastName,
-                command.DateOfBirth,
-                command.AddressesToAddOrUpdate,
-                command.AddresesToRemoveNames);
+                command.Name,
+                command.EmailAddress,
+                command.PhoneNumber);
+
+            return NoResult;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Rz.DddDemo.Base.Mapping.Interface;
 using Rz.DddDemo.Base.Domain.ValueObject.Interfaces;
 

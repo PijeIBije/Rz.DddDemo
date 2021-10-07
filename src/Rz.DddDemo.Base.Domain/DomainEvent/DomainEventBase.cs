@@ -4,10 +4,10 @@ namespace Rz.DddDemo.Base.Domain.DomainEvent
 {
     public abstract class DomainEventBase<TSource>:IDomainEvent
     {
-        public TSource Id { get; }
-        protected DomainEventBase(TSource id)
+        public TSource Source { get; }
+        protected DomainEventBase(TSource source)
         {
-            Id = id;
+            Source = source;
         }
     }
 }

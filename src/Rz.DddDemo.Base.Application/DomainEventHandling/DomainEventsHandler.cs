@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Rz.DddDemo.Base.Application.DomainEventHandling.Interfaces;
 using Rz.DddDemo.Base.Domain.DomainEvent.Interfaces;
 
@@ -9,47 +10,31 @@ namespace Rz.DddDemo.Base.Application.DomainEventHandling
 {
     public class DomainEventsHandler
     {
-        private readonly Func<Type, IDomainEventHandler> domainEventHandlerProviderFunc;
-
+        private readonly IMediator mediator;
         private readonly List<IDomainEvent> domainEvents = new List<IDomainEvent>();
 
-        public DomainEventsHandler(Func<Type, IDomainEventHandler> domainEventHandlerProviderFunc)
+        public DomainEventsHandler(IMediator mediator)
         {
-            this.domainEventHandlerProviderFunc = domainEventHandlerProviderFunc;
+            this.mediator = mediator;
         }
 
-        public void Register(IDomainEvent domainEvent)
+        public void Register(IDomainEvent domainEventAdapter)
         {
-            domainEvents.Add(domainEvent);
+            domainEvents.Add(domainEventAdapter);
         }
 
         public async Task HandleAll()
         {
-            var currentDomainEvents = domainEvents.ToList();
-
-            foreach (var currentDomainEvent in currentDomainEvents)
+            foreach (var domainEvent in domainEvents)
             {
-                var domainEventType = currentDomainEvent.GetType();
+                var domainEventAdapterType = typeof(DomainEventAdapter<>).MakeGenericType(domainEvent.GetType());
 
-                var domainEventHandler = domainEventHandlerProviderFunc(domainEventType);
+                var domainEventAdapter = (IDomainEventAdapter)Activator.CreateInstance(domainEventAdapterType, domainEvent);
 
-                var handleMethod = domainEventHandler.GetType()
-                    .GetMethod(nameof(IDomainEventHandler<IDomainEvent>.Handle), new[]{domainEventType});
-
-                if (handleMethod != null)
-                {
-                    var handleTask = (Task)handleMethod.Invoke(domainEventHandler,new object[]{currentDomainEvent});
-                    if(handleTask==null) throw new InvalidOperationException($"{nameof(IDomainEventHandler<IDomainEvent>.Handle)} must return a task.");
-                    await handleTask;
-                }
-                else
-                {
-                    throw new InvalidOperationException(
-                        $"No {nameof(IDomainEventHandler<IDomainEvent>.Handle)} accepting {domainEventType.FullName} on {domainEventHandler.GetType().FullName}");
-                }
+                await mediator.Publish(domainEventAdapter??throw new InvalidOperationException($"Could not wrap {domainEvent.GetType().FullName}"));
             }
 
-            currentDomainEvents.Clear();
+            domainEvents.Clear();
         }
     }
 }

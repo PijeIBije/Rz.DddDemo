@@ -1,6 +1,8 @@
-﻿namespace Rz.DddDemo.Base.Application.CommandHandling.Interfaces
+﻿using MediatR;
+
+namespace Rz.DddDemo.Base.Application.CommandHandling.Interfaces
 {
-    public interface ICommand
+    public interface ICommand<TResult>:IRequest<TResult>
     {
     }
 }

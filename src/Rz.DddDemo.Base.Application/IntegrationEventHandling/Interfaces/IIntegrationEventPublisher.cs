@@ -1,12 +1,8 @@
-﻿namespace Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces
-{
-    public interface IIntegrationEventPublisher<in TIntegrationEvent> where TIntegrationEvent:IIntegrationEvent
-    {
-        public void Publish(TIntegrationEvent integrationEvent);
-    }
+﻿using MediatR;
 
-    public interface IIntegrationEventPublisher
+namespace Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces
+{
+    public interface IIntegrationEventPublisher<in TIntegrationEvent>:IRequestHandler<TIntegrationEvent,NoResult> where TIntegrationEvent : IIntegrationEvent
     {
-        public void Publish(object integrationEvent);
     }
 }

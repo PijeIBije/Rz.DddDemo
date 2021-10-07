@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 using Rz.DddDemo.Base.Application.TransactionHandling;
@@ -32,20 +34,19 @@ namespace Rz.DddDemo.Base.Application.IntegrationEventHandling
             this.transaction = transaction;
         }
 
-        public async Task<bool> Handle(TIntegrationEvent integrationEvent)
+        public async Task<NoResult> Handle(TIntegrationEvent integrationEvent,CancellationToken cancellationToken)
         {
             transaction.Start();
-            var result = await HandleBody(integrationEvent);
+            await HandleBody(integrationEvent);
             await domainEventsHandler.HandleAll();
             await transaction.Commit();
             integrationEventsPublisher.PublishAll();
-            return result;
+
+            return NoResult;
         }
 
-        protected abstract Task<bool> HandleBody(TIntegrationEvent customerUpdatedIntegrationEvent);
-        public Task<bool> Handle(IIntegrationEvent integrationEvent)
-        {
-            return Handle((TIntegrationEvent) integrationEvent);
-        }
+        protected abstract Task HandleBody(TIntegrationEvent integrationEvent);
+
+        protected NoResult NoResult => NoResult.Instance;
     }
 }

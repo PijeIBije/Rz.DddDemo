@@ -8,17 +8,14 @@ namespace Rz.DddDemo.Base.Infrastructure.MongoDb
 {
     public class MongoSharedTransaction
     {
-        private readonly MongoClient mongoClient;
-
         private readonly List<Func<Task>> mongoTransactionTasks = new List<Func<Task>>();
 
         public delegate void Commit(List<Func<Task>> mongoTransactionTasks);
 
         public event Commit CommitEvent;
 
-        public MongoSharedTransaction(MongoClient mongoClient,ITransactionEvents transactionEvents)
+        public MongoSharedTransaction(ITransactionEvents transactionEvents)
         {
-            this.mongoClient = mongoClient;
             transactionEvents.CommitEvent += TransactionEventsCommitEvent;
         }
 
@@ -26,15 +23,15 @@ namespace Rz.DddDemo.Base.Infrastructure.MongoDb
         {
             transactionTasks.Add(async () =>
             {
-                using var session = await mongoClient.StartSessionAsync();
-                session.StartTransaction();
+                //using var session = await mongoClient.StartSessionAsync();
+                //session.StartTransaction();
                 CommitEvent?.Invoke(mongoTransactionTasks);
                 foreach (var mongoTransactionTask in mongoTransactionTasks)
                 {
                     await mongoTransactionTask();
                 }
-                mongoTransactionTasks.Clear();
-                await session.CommitTransactionAsync();
+                //mongoTransactionTasks.Clear();
+                //await session.CommitTransactionAsync();
             });
         }
     }

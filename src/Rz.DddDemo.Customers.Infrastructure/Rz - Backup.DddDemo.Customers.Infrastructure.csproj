@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="Google.Protobuf" Version="3.13.0" />
+
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.32.0" />
+
+    <PackageReference Include="Grpc.Tools" Version="2.32.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
+
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
+
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
+
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure.RabbitMq\Rz.DddDemo.Base.Infrastructure.RabbitMq.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Base.Mapping\Rz.DddDemo.Base.Mapping.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Customers.Application\Rz.DddDemo.Customers.Application.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure.MongoDb\Rz.DddDemo.Base.Infrastructure.MongoDb.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Base.Infrastructure\Rz.DddDemo.Base.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Rz.DddDemo.PurchaseHistoryProviders.ProviderB\Protos\CustomerData.proto" GrpcServices="Client">
+      <Link>Protos\CustomerData.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\Rz.DddDemo.PurchaseHistoryProviders.ProviderB\Protos\PurchaseState.proto" GrpcServices="None">
+      <Link>Protos\PurchaseState.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PurchaseHistoryProvider\PurchaseHistoryProviderC\Mock\" />
+  </ItemGroup>
+
+</Project>

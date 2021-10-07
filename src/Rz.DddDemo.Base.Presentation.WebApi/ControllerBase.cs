@@ -18,7 +18,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi
     [ProducesResponseType(typeof(Dictionary<string, string>), StatusCodes.Status400BadRequest)]
     public abstract class ControllerBase:Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        private readonly HttpContextAccessor httpContextAccessor;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IExceptionMapper exceptionMapper;
 
         private readonly List<GlobalExceptionHandler> globalExceptionHandlers = new List<GlobalExceptionHandler>();
@@ -26,7 +26,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi
         public IReadOnlyList<GlobalExceptionHandler> GlobalExceptionHandlers => globalExceptionHandlers;
 
         protected ControllerBase(
-            HttpContextAccessor httpContextAccessor,
+            IHttpContextAccessor httpContextAccessor,
             IExceptionMapper exceptionMapper)
         {
             this.httpContextAccessor = httpContextAccessor;
@@ -35,7 +35,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi
 
         public const string IncludesPropertyPathSeparator = ".";
 
-        public const string IncludesQueryParameterName = ".";
+        public const string IncludesQueryParameterName = "includes";
 
         protected IActionResult NotFound(Exception exception)
         {

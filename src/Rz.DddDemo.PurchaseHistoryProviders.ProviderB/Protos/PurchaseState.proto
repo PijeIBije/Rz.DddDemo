@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option csharp_namespace = "Rz.DddDemo.PurchaseHistoryProviders.ProviderB.Protos";
+
+enum PurchaseState
+{
+	Successful = 0;
+	Returned = 1;
+}

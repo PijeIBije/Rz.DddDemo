@@ -2,11 +2,11 @@
 {
     public class CustomerIncludes
     {
-        public bool FirstName { get; set; }
+        public bool Name { get; set; }
 
-        public bool LastName { get; set; }
+        public bool PhoneNumber { get; set; }
 
-        public bool DateOfBirth { get; set; }
-        public AddressIncludes Addresses { get; set; }
+        public bool EmailAddress { get; set; }
+        public PurchaseIncludes PurchaseIncludes { get; set; }
     }
 }

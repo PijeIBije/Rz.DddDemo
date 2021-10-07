@@ -5,5 +5,9 @@
         public const string DbName = "CustomersDb";
 
         public const string CustomersCollection = "Customers";
+
+        public const string PurchasesCollection = "Purchases";
+
+        public const string CustomerDiscounts = "CustomerDiscounts";
     }
 }

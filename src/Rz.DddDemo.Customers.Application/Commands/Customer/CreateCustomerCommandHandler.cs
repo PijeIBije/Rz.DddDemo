@@ -1,23 +1,29 @@
 ﻿using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.CommandHandling;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Base.Application.TransactionHandling;
-using Rz.DddDemo.Customers.Application.Commands.Interfaces;
 using Rz.DddDemo.Customers.Application.IntegrationEvents.Outbound;
+using Rz.DddDemo.Customers.Application.Interfaces;
 using Rz.DddDemo.Customers.Domain;
-using Rz.DddDemo.Customers.Domain.Address;
-using Rz.DddDemo.Customers.Domain.ValueObjects;
+using Rz.DddDemo.Customers.Domain.CustomerDiscount;
 
 namespace Rz.DddDemo.Customers.Application.Commands.Customer
 {
     public class CreateCustomerCommandHandler : CommandHandlerBase<CreateCustomerCommand, CustomerId>
     {
         private readonly ICustomerRepository customerRepository;
+        private readonly IPurchaseRepository purchaseRepository;
+        private readonly ICustomerDiscountRepository customerDiscountRepository;
+        private readonly IPurchaseHistoryProvider getLegacyPurchasesCommand;
 
         public CreateCustomerCommandHandler(
             ICustomerRepository customerRepository,
+            IPurchaseRepository purchaseRepository,
+            ICustomerDiscountRepository customerDiscountRepository,
+            IPurchaseHistoryProvider getLegacyPurchasesCommand,
             DomainEventsHandler domainEventsHandler,
             IntegrationEventsPublisher integrationEventsPublisher,
             Transaction transaction) : base(
@@ -26,21 +32,25 @@ namespace Rz.DddDemo.Customers.Application.Commands.Customer
             transaction)
         {
             this.customerRepository = customerRepository;
+            this.purchaseRepository = purchaseRepository;
+            this.customerDiscountRepository = customerDiscountRepository;
+            this.getLegacyPurchasesCommand = getLegacyPurchasesCommand;
         }
 
         protected override async Task<CustomerId> HandleBody(CreateCustomerCommand command)
         {
-            var addreses = command.Addresses.Select(x => new AddressEntity(
-                x.Name,
-                x.AddressLine1,
-                x.AddressLine2,
-                x.City,
-                x.PhoneNumber,
-                x.EmailAddress,
-                x.Country));
+            var customer = new CustomerAggregate(command.Name, command.EmailAddress, command.PhoneNumber,command.LegacyCustomerId);
 
-            var customer = new CustomerAggregate(command.FirstName, command.LastName, command.DateOfBirth,
-                addreses.ToList());
+            if (customer.LegacyCustomerId != null)
+            {
+                var purchaseHistory = (await getLegacyPurchasesCommand.GetPurchases(command.CustomerId, customer.LegacyCustomerId)).ToList();
+
+                await purchaseRepository.Save(purchaseHistory);
+
+                var customerDiscount = new CustomerDiscountAggregate(customer.Id, purchaseHistory.Sum(x=>x.TotalPrice));
+
+                await customerDiscountRepository.Save(customerDiscount);
+            }
 
             await customerRepository.Save(customer);
 

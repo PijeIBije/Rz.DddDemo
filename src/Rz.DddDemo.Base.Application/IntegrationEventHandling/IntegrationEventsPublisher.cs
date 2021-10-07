@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using MediatR;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 
 namespace Rz.DddDemo.Base.Application.IntegrationEventHandling
 {
     public class IntegrationEventsPublisher
     {
+        private readonly IMediator mediator;
         private readonly List<IIntegrationEvent> integrationEvents = new List<IIntegrationEvent>();
 
-        private readonly Func<Type, IIntegrationEventPublisher> integrationEventPublisherLocatror;
-
-        public IntegrationEventsPublisher(Func<Type, IIntegrationEventPublisher> integrationEventPublisherLocatror)
+        public IntegrationEventsPublisher(IMediator mediator)
         {
-            this.integrationEventPublisherLocatror = integrationEventPublisherLocatror;
+            this.mediator = mediator;
         }
 
         public void Register(IIntegrationEvent integrationEvent)
@@ -24,11 +24,7 @@ namespace Rz.DddDemo.Base.Application.IntegrationEventHandling
         {
             foreach (var integrationEvent in integrationEvents)
             {
-                var integrationEventType = integrationEvent.GetType();
-
-                var integrationEventPublisher = integrationEventPublisherLocatror(integrationEventType);
-
-                integrationEventPublisher.Publish(integrationEvent);
+                mediator.Send(integrationEvent);
             }
         }
     }

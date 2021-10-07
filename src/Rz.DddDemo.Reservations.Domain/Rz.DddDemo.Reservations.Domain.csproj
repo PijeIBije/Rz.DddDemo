@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Rz.DddDemo.Reservations.Domain</AssemblyName>
+    <RootNamespace>Rz.DddDemo.Reservations.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rz.DddDemo.Base.Domain\Rz.DddDemo.Base.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

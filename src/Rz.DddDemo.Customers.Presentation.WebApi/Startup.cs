@@ -37,7 +37,10 @@ namespace Rz.DddDemo.Customers.Presentation.WebApi
                     swaggerGenOptions.UseInlineDefinitionsForEnums();
                     swaggerGenOptions.DescribeAllParametersInCamelCase();
                 })
-                .AddInfrastructure(Configuration)
+                .AddHttpContextAccessor()
+                .AddMapper()
+                .AddInfrastructureDependencies(Configuration)
+                .AddApplicationDependencies()
                 .AddPrimaryAdapters()
                 .AddSecondaryAdapters()
                 .AddWebApiExtensions()

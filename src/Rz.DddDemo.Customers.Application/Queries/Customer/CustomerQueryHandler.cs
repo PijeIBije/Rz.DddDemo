@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.QueryHandling.Intefaces;
-using Rz.DddDemo.Customers.Application.Queries.Interfaces;
+using Rz.DddDemo.Customers.Application.Interfaces;
 
 namespace Rz.DddDemo.Customers.Application.Queries.Customer
 {
@@ -14,9 +15,9 @@ namespace Rz.DddDemo.Customers.Application.Queries.Customer
             this.customerRepository = customerRepository;
         }
 
-        public Task<IEnumerable<CustomerResult>> Handle(CustomerQuery query)
+        public Task<IEnumerable<CustomerResult>> Handle(CustomerQuery query,CancellationToken cancellationToken)
         {
-            return customerRepository.Get(query.CustomerId, query.CustomerIncludes);
+            return customerRepository.Get(query.CustomerId, query.CustomerIncludes,cancellationToken);
         }
     }
 }

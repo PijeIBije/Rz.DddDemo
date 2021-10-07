@@ -9,9 +9,4 @@
     <ProjectReference Include="..\Rz.DddDemo.Customers.Domain\Rz.DddDemo.Customers.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="IntegrationEvents\Inbound\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

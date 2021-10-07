@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.DomainEventHandling;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling;
 using Rz.DddDemo.Customers.Application.IntegrationEvents.Outbound;
-using Rz.DddDemo.Customers.Domain.DomainEvents;
+using Rz.DddDemo.Customers.Domain.Purchase;
 
 namespace Rz.DddDemo.Customers.Application.DomainEvents.Customer
 {
@@ -19,7 +19,7 @@ namespace Rz.DddDemo.Customers.Application.DomainEvents.Customer
 
         protected override Task HandleBody(CustomerChangedDomainEvent domainEvent)
         {
-            RegisterIntegrationEvent(new CustomerUpdatedIntegrationEvent(domainEvent.Id));
+            RegisterIntegrationEvent(new CustomerUpdatedIntegrationEvent(domainEvent.Source));
             return Task.CompletedTask;
         }
     }

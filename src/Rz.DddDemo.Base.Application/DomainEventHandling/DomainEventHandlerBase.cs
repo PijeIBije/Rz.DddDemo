@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Rz.DddDemo.Base.Application.CommandHandling.Interfaces;
 using Rz.DddDemo.Base.Application.DomainEventHandling.Interfaces;
@@ -11,7 +12,7 @@ using Rz.DddDemo.Base.Domain.DomainEvent.Interfaces;
 
 namespace Rz.DddDemo.Base.Application.DomainEventHandling
 {
-    public abstract class DomainEventHanlderBase<TDomainEvent> : IDomainEventHandler<TDomainEvent> where TDomainEvent : IDomainEvent
+    public abstract class DomainEventHanlderBase<TDomainEvent> : IDomainEventHandler<TDomainEvent,IDomainEventAdapter<TDomainEvent>> where TDomainEvent : IDomainEvent
     {
         private readonly DomainEventsHandler domainEventsHandler;
         private readonly IntegrationEventsPublisher integrationEventsPublisher;
@@ -24,9 +25,11 @@ namespace Rz.DddDemo.Base.Application.DomainEventHandling
             this.integrationEventsPublisher = integrationEventsPublisher;
         }
 
-        public async Task Handle(TDomainEvent domainEvent)
+        public async Task Handle(IDomainEventAdapter<TDomainEvent> domainEventAdapter,CancellationToken cancellationToken)
         {
-            await HandleBody(domainEvent);
+            if(cancellationToken.IsCancellationRequested) throw new OperationCanceledException();
+
+            await HandleBody(domainEventAdapter.DomainEvent);
         }
 
         protected void RegisterIntegrationEvent(IIntegrationEvent integrationEvent)
@@ -40,5 +43,9 @@ namespace Rz.DddDemo.Base.Application.DomainEventHandling
         }
 
         protected abstract Task HandleBody(TDomainEvent domainEvent);
+        public async Task Handle(TDomainEvent domainEvent)
+        {
+            await HandleBody(domainEvent);
+        }
     }
 }

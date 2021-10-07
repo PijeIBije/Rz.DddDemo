@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Rz.DddDemo.Legacy.TrackingSystemA.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [PurchaseHistory("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

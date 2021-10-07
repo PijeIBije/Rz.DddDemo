@@ -1,14 +1,9 @@
 ﻿using System.Threading.Tasks;
+using MediatR;
 
 namespace Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces
 {
-    public interface IIntegrationEventHandler<in TIntegrationEvent>:IIntegrationEventHandler where TIntegrationEvent:IIntegrationEvent
+    public interface IIntegrationEventHandler<in TIntegrationEvent>:IRequestHandler<TIntegrationEvent,NoResult> where TIntegrationEvent:IIntegrationEvent
     {
-        Task<bool> Handle(TIntegrationEvent integrationEvent);
-    }
-
-    public interface IIntegrationEventHandler
-    {
-        Task<bool> Handle(IIntegrationEvent integrationEvent);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MediatR;
 using Rz.DddDemo.Base.Application.IntegrationEventHandling.Interfaces;
 using Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService.Interfaces;
 
@@ -11,18 +12,19 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
         where TMessageDto:new()
         where TIntegrationEvent:IIntegrationEvent
     {
-        private readonly Func<Type, IIntegrationEventHandler> integrationEventHandlerLocator;
+        private readonly IMediator mediator;
 
         protected MessageHandlerBase(
             string exchangeName, 
             string routingKey, 
-            Dictionary<string,object> arguments, 
-            Func<Type, IIntegrationEventHandler> integrationEventHandlerLocator)
+            Dictionary<string,object> arguments,
+            IMediator mediator)
         {
+            this.mediator = mediator;
             ExchangeName = exchangeName;
             RoutingKey = routingKey;
             Arguments = arguments;
-            this.integrationEventHandlerLocator = integrationEventHandlerLocator;
+            this.mediator = mediator;
         }
 
         public string ExchangeName { get; }
@@ -35,11 +37,9 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.RabbitMqHostedService
 
             var integrationEvent = ToIntegrationEvent(messageDto);
 
-            var integrationEventHandler = integrationEventHandlerLocator(typeof(TIntegrationEvent));
+            await mediator.Send(integrationEvent);
 
-            var result = await integrationEventHandler.Handle(integrationEvent);
-
-            return result;
+            return true;
         }
 
         public abstract TIntegrationEvent ToIntegrationEvent(TMessageDto messageDto);

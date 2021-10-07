@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "Rz.DddDemo.PurchaseHistoryProviders.ProviderB.Protos";
+
+import "PurchaseState.proto";
+import "google/protobuf/timestamp.proto";
+
+service CustomerDataServiceProto
+{
+	rpc GetPurchaseHistory (PurchaseHistoryRequest) returns (PurchaseHisotryResponse);
+}
+
+message PurchaseHistoryRequest{
+	string CustomerId = 1;
+	bool includeReturned = 2;
+}
+
+message Purchase{
+	google.protobuf.Timestamp PurchaseDate = 1;
+	string CustomerId = 2;
+	repeated .Item Items = 3;
+	PurchaseState PurchaseState = 4;
+
+}
+
+message Item{
+	string Name = 1;
+	float Price = 2;
+	int32 Quantity = 3;
+}
+
+message PurchaseHisotryResponse{
+	string CustomerId = 1;
+	repeated .Purchase Purchases = 3;
+}
+

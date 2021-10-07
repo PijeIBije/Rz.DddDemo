@@ -27,7 +27,7 @@ namespace Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle
 
                     foreach (var include in includes)
                     {
-                        includesParamter.Schema.Enum.Add(new OpenApiString(include));
+                        includesParamter.Schema.Items.Enum.Add(new OpenApiString(include));
                     }
                 }
             }

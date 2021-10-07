@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -15,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rz.DddDemo.Base.Application\Rz.DddDemo.Base.Application.csproj" />
+    <ProjectReference Include="..\Rz.DddDemo.Base.Mapping.DomainObjects\Rz.DddDemo.Base.Mapping.DomainObjects.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Mapping\Rz.DddDemo.Base.Mapping.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Customers.Application\Rz.DddDemo.Customers.Application.csproj" />
     <ProjectReference Include="..\Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle\Rz.DddDemo.Base.Presentation.WebApi.Swashbuckle.csproj" />
